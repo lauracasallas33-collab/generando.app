@@ -1,0 +1,34 @@
+CONTROL DEL CONDUCTOR — APP PARA ANDROID Y IPHONE
+==================================================
+
+Esta carpeta es la app instalable (PWA). Contiene:
+  index.html             la app completa
+  manifest.webmanifest   nombre, colores e íconos de la app
+  sw.js                  permite abrir rápido y sin señal después de la primera carga
+  icono-*.png, apple-touch-icon.png, favicon-32.png   íconos para Android, iPhone y el navegador
+
+1) PUBLICARLA EN INTERNET (gratis, una sola vez, desde el Mac)
+   1. Entra a github.com e inicia sesión (o crea una cuenta).
+   2. Arriba a la derecha: + → New repository. Nombre: control-conductor. Marca Public. Create repository.
+   3. Toca "uploading an existing file". Arrastra TODO lo que hay dentro de esta carpeta
+      (index.html, manifest.webmanifest, sw.js y los íconos .png). No arrastres la carpeta de afuera.
+   4. Commit changes.
+   5. Settings → Pages → Branch: main, carpeta / (root) → Save.
+   6. En 1 o 2 minutos aparece el enlace: https://TU-USUARIO.github.io/control-conductor/
+
+2) INSTALARLA EN UN CELULAR
+   Android (Chrome): abre el enlace, espera a que cargue, menú ⋮ → "Instalar app" o "Agregar a pantalla principal".
+   iPhone (Safari):  abre el enlace, espera a que cargue, botón Compartir → "Agregar a inicio".
+   La primera vez necesita internet y tarda hasta un minuto. Los datos quedan guardados en ese celular.
+
+3) PUBLICARLA EN PLAY STORE Y APP STORE (opcional)
+   1. Entra a https://www.pwabuilder.com, pega tu enlace de GitHub y toca Start.
+   2. Package For Stores:
+      - Android: descarga el paquete. Trae un .apk (se instala directo en el celular para probar)
+        y un .aab (el que se sube a Google Play Console).
+      - iOS: descarga el proyecto, ábrelo en el Mac con Xcode y súbelo con tu cuenta de Apple Developer.
+
+IMPORTANTE: COPIAS DE SEGURIDAD
+   Los datos viven solo en el celular de cada conductor. En Mi perfil → Copia de seguridad se descarga un
+   archivo .db; guárdalo en Drive, iCloud o el correo. En un celular nuevo, en la pantalla de inicio,
+   pestaña "Restaurar copia", se sube ese archivo y se inicia sesión con el mismo correo y contraseña.

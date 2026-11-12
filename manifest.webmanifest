@@ -1,0 +1,20 @@
+{
+  "id": "./",
+  "name": "Control del Conductor",
+  "short_name": "Conductor",
+  "description": "Ingresos, costos, gastos y utilidad de conductores de plataformas: por viaje, por hora, por día, semana y mes.",
+  "lang": "es-CO",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#141A23",
+  "theme_color": "#141A23",
+  "categories": ["finance", "productivity", "business"],
+  "icons": [
+    {"src": "icono-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icono-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icono-adaptable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
