@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Probador virtual · Oro &amp; Nudo Joyería</title>
+<meta name="theme-color" content="#1C1C1E">
+<style>
+:root{--osc:#1C1C1E;--oro:#B88D34;--orol:#F4EAD0;--crema:#FAF7F1;--gris:#696969;--borde:#E1DACC;--verde:#2E7D32;--rojo:#B71C1C}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--crema);color:var(--osc)}
+header{background:var(--osc);color:var(--oro);padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
+header b{font-size:19px;letter-spacing:.5px}
+header span{color:#fff;font-size:13px;opacity:.85}
+main{max-width:1180px;margin:0 auto;padding:16px;display:grid;grid-template-columns:1fr 360px;gap:16px}
+@media (max-width:900px){main{grid-template-columns:1fr}}
+.escena{position:relative;background:#303034;border-radius:14px;overflow:hidden;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center}
+canvas#lienzo{width:100%;height:100%;object-fit:contain;display:block}
+video{display:none}
+.estado{position:absolute;left:12px;top:12px;padding:7px 14px;border-radius:20px;font-size:13px;font-weight:700;color:#fff;background:#555}
+.estado.ok{background:var(--verde)}.estado.aviso{background:#C77700}.estado.error{background:var(--rojo)}
+.fps{position:absolute;right:12px;top:12px;padding:6px 10px;border-radius:10px;font-size:12px;color:#fff;background:#0008}
+.guia{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:#000b;color:#fff;padding:10px 16px;border-radius:12px;font-size:15px;display:none;text-align:center}
+.inicio{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#fff;text-align:center;padding:20px}
+.inicio p{margin:0;max-width:440px;line-height:1.4;font-size:15px;opacity:.9}
+.panel{background:#fff;border:1px solid var(--borde);border-radius:14px;padding:16px}
+.panel h2{font-size:16px;margin:0 0 6px}
+.panel h3{font-size:13px;color:var(--gris);margin:14px 0 6px;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--borde);background:#fff;border-radius:16px;padding:7px 12px;font-size:13px;cursor:pointer}
+.chip.sel{background:var(--oro);border-color:var(--oro);color:#fff;font-weight:700}
+.btn{display:block;width:100%;padding:13px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;border:1.5px solid var(--osc);background:#fff;margin-top:10px}
+.btn.oro{background:var(--oro);border-color:var(--oro);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.fila{display:flex;gap:8px}.fila .btn{flex:1}
+.nota{font-size:12px;color:var(--gris);line-height:1.4;margin-top:12px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--osc);color:#fff;padding:12px 18px;border-radius:10px;font-size:14px;display:none;z-index:9}
+.alterno{background:var(--orol);border-radius:10px;padding:12px;font-size:13px;margin-top:12px;line-height:1.4}
+footer{text-align:center;font-size:12px;color:var(--gris);padding:10px 16px 24px}
+</style>
+</head>
+<body>
+<header><b>ORO &amp; NUDO JOYERÍA</b><span>Probador virtual · <span id="carrito">Carrito (0)</span></span></header>
+<main>
+  <section>
+    <div class="escena" id="escena">
+      <canvas id="lienzo" width="960" height="720"></canvas>
+      <video id="video" playsinline muted></video>
+      <div class="estado" id="estado" style="display:none"></div>
+      <div class="fps" id="fps" style="display:none"></div>
+      <div class="guia" id="guia"></div>
+      <div class="inicio" id="inicio">
+        <div style="font-size:46px">💍</div>
+        <b style="font-size:20px">Pruébate tu joya con la cámara</b>
+        <p>Elige la joya a la derecha y pulsa <b>Iniciar probador</b>. Tu navegador te pedirá permiso para usar la cámara. Las fotos se guardan solo en tu dispositivo.</p>
+      </div>
+    </div>
+    <div class="alterno">¿No quieres usar la cámara o tu equipo no es compatible? Usa la <a href="#" id="linkSinCamara">vista previa sin cámara</a> con las mismas elecciones.</div>
+  </section>
+
+  <aside class="panel">
+    <h2>Te estás probando</h2>
+    <h3>Joya</h3><div class="chips" id="tipos"></div>
+    <h3>Material</h3><div class="chips" id="materiales"></div>
+    <h3>Piedra natural</h3><div class="chips" id="piedras"></div>
+    <button class="btn oro" id="btnIniciar">Iniciar probador</button>
+    <div class="fila">
+      <button class="btn" id="btnFoto" disabled>📸 Tomar foto</button>
+      <button class="btn" id="btnGirar" disabled>🔄 Girar cámara</button>
+    </div>
+    <button class="btn oro" id="btnPedido">Agregar al pedido</button>
+    <button class="btn" id="btnSalir" disabled>Salir del probador</button>
+    <div class="nota" id="consejo"></div>
+  </aside>
+</main>
+<footer>Prototipo del proyecto ADSO (SENA) · Sebastian Granada Sastoque · RF-14 y RF-15 · Detección con MediaPipe (Google, licencia Apache 2.0)</footer>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/hands.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5.1675469404/pose.js" crossorigin="anonymous"></script>
+<script src="app.js"></script>
+</body>
+</html>
